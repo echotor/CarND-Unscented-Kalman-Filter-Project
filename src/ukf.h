@@ -25,11 +25,26 @@ public:
   ///* state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
   VectorXd x_;
 
+  ///* augmented state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate noise_acc noise_phiacc] in SI units and rad
+  VectorXd x_aug_;
+
   ///* state covariance matrix
   MatrixXd P_;
 
+  // augmented covariance matrix
+  MatrixXd P_aug_;
+
+  //augmented sigma point matrix
+  MatrixXd Xsig_aug_;
+
   ///* predicted sigma points matrix
   MatrixXd Xsig_pred_;
+
+  // matrix for sigma points in radar measurement space
+  MatrixXd Zsig_radar_;
+
+    // matrix for sigma points in lidar measurement space
+  MatrixXd Zsig_lidar_;
 
   ///* time when the state is true, in us
   long long time_us_;
@@ -55,8 +70,17 @@ public:
   ///* Radar measurement noise standard deviation radius change in m/s
   double std_radrd_ ;
 
+  // Lidar measurement noise covariance matrix
+  MatrixXd R_lidar_;
+
+  // Radar measurement noise covariance matrix
+  MatrixXd R_radar_;
+
   ///* Weights of sigma points
   VectorXd weights_;
+
+  // H laser
+  MatrixXd H_lidar_;
 
   ///* State dimension
   int n_x_;
@@ -64,8 +88,17 @@ public:
   ///* Augmented state dimension
   int n_aug_;
 
+  ///* Number of sigma points
+  int n_sig_;
+
   ///* Sigma point spreading parameter
   double lambda_;
+
+  ///* the current NIS for radar
+  double NIS_radar_;
+
+  ///* the current NIS for laser
+  double NIS_laser_;
 
 
   /**
