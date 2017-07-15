@@ -22,16 +22,16 @@ UKF::UKF() {
   is_initialized_ = false;
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 2.5;
+  std_a_ = 0.3;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 2.0  ;
+  std_yawdd_ = 0.3;
 
   // Laser measurement noise standard deviation position1 in m
   std_laspx_ = 0.15;
 
   // Laser measurement noise standard deviation position2 in m
-  std_laspy_ = 0.15;
+  std_laspy_ = 0.10;
 
   // Radar measurement noise standard deviation radius in m
   std_radr_ = 0.3;
@@ -40,7 +40,7 @@ UKF::UKF() {
   std_radphi_ = 0.03;
 
   // Radar measurement noise standard deviation radius change in m/s
-  std_radrd_ = 0.3;
+  std_radrd_ = 0.4;
 
   //set state dimension
   n_x_ = 5;
@@ -147,10 +147,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     // px, py, velocity, yaw, yawd (yaw rate)
     x_ << px, py, v, 0, 0;
 
-    P_ << 1, 0, 0, 0, 0,
-          0, 1, 0, 0, 0,
-          0, 0, 1000, 0, 0,
-          0, 0, 0, 1000, 0,
+    P_ << 0.15, 0, 0, 0, 0,
+          0, 0.15, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 1, 0,
           0, 0, 0, 0, 1;
 
     // ensure we mark the timestamp
